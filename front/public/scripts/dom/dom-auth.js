@@ -47,16 +47,37 @@ export async function doLogin(event) {
   event.preventDefault();
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+  const botonHtml = document.getElementById('menu-logout');
   try {
     await auth.login(username, password); //Esto ya setea el user.
     const user = auth.getUser();
     if (!user) throw new Error("No hay usuario seteado.");
     userDataElement.textContent = user.username;
-
+    botonHtml.style.display='block';
     mainElement.innerHTML = "<h1>Login exitoso.</h1>";
   } catch (error) {
     console.error(error.message);
     const errorMessageElement = document.getElementById("error-login");
+
+    /*html*/
+    const errorTemplate = `
+      <p>${error.message}</p>
+    `;
+    errorMessageElement.innerHTML = errorTemplate;
+  }
+}
+
+export async function doLogout(event) {
+  const botonHtml = document.getElementById('menu-logout');
+  try {
+    
+    auth.logout();
+    
+    botonHtml.style.display='none';
+    mainElement.innerHTML = "<h1>Cierre de sesión exitoso!.</h1>";
+  } catch (error) {
+    console.error(error.message);
+    const errorMessageElement = document.getElementById("error-logout");
 
     /*html*/
     const errorTemplate = `

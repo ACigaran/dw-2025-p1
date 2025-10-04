@@ -11,6 +11,11 @@ export function hayToken() {
   return !!token;
 }
 
+export function borrarToken() {
+  token = '';
+  return true;
+}
+
 function getHeaders() {
   const headers = {
     "content-Type": "application/json",
